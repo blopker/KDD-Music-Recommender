@@ -30,3 +30,6 @@ References
 3. Liang, Huizhi, Hogan, Jim, & Xu, Yue (2010) Parallel user proﬁling based
 on folksonomy for Large Scaled Recommender Systems : an implimentation of Cascading MapReduce. In Proceedings of 10th Industrial Conference on Data Mining, IEEE, Berlin. <http://eprints.qut.edu.au/41889/1/icdm_cloudcomputing_cameraReady.pdf[c]>.
 
+Sandbox
+-------
+/cs/sandbox/faculty/tyang/290N12/Y/ydata-music/ydata-ymusic-kddcup-2011-track2
