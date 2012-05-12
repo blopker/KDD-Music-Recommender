@@ -20,7 +20,7 @@ public class Songs implements Iterable<Song> {
 
     public void addSong(Song song) {
         if (songs.containsKey(song.getID())) {
-            songs.get(song.getID()).addAvgRating(song.getRating(), song.getRatingCount());
+            songs.get(song.getID()).joinRating(song.getRating(), song.getRatingCount());
         } else {
             songs.put(song.getID(), song);
         }
