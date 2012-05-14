@@ -1,6 +1,7 @@
 package Database;
 
 import Database.Primitives.User;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -13,7 +14,7 @@ public class Users implements Iterable<User> {
 
     private Map<Integer, User> users;
 
-    protected Users() {
+    public Users() {
         users = new HashMap<Integer, User>();
     }
 
@@ -23,6 +24,10 @@ public class Users implements Iterable<User> {
 
     protected User getUser(int id) {
         return users.get(id);
+    }
+    
+    public ArrayList<User> getUserList() {
+        return (ArrayList) users.values();
     }
 
     @Override

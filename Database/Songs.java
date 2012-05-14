@@ -1,6 +1,7 @@
 package Database;
 
 import Database.Primitives.Song;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -37,6 +38,10 @@ public class Songs implements Iterable<Song> {
     
     public boolean containsSong(int id){
         return songs.containsKey(id);
+    }
+    
+    public ArrayList<Song> getSongList() {
+        return (ArrayList) songs.values();
     }
 
     @Override
