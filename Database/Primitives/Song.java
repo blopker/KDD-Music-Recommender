@@ -10,12 +10,18 @@ import java.util.List;
 public class Song {
     private int id;
     private int totalRating;
-    private int ratingCount = 1;
+    private int ratingCount;
     private Similarities similarities;
     
     public Song(int id, int rating){
         this.id = id;
         this.totalRating = rating;
+        ratingCount = 1;
+    }
+    public Song(int id) {
+        this.id = id;
+        this. totalRating = 0;
+        ratingCount = 0;
     }
     
     public void addRating(int rating){
@@ -42,6 +48,13 @@ public class Song {
 
     public Similarities getNeighborhood() {
         return similarities;
+    }
+    public void addToNeighborhood(Similarity sim) {
+        similarities.insert(sim);
+    }
+    
+    public double getSimilarity(Song s) {
+        return similarities.getSimilarity(s);
     }
 
     public void print() {

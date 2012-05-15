@@ -6,6 +6,8 @@
 package Database;
 
 import Database.Primitives.Similarity;
+import Database.Primitives.Song;
+import SequentialRecommender.SequentialKNN;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -14,7 +16,7 @@ import java.util.Collections;
  * @author sarahejones, sns
  */
 public class Similarities {
-    private static int k;
+    private static int k = SequentialKNN.getK();
     private ArrayList<Similarity> neighbors;
 
     public Similarities() {
@@ -35,7 +37,21 @@ public class Similarities {
 
     public void print() {
         for (Similarity is : neighbors) {
-            System.out.println("-" + is.getNeighborItem().getID() + "\t" + is.getSimilarity());
+            System.out.println("-" + "\t"+ is.getNeighborSong().getID() + "\t" + is.getSimilarity());
         }
+    }
+    
+    public double getSimilarity(Song song) {
+        for (Similarity sim : neighbors)
+            if (song.getID() == sim.getNeighborSong().getID())
+                sim.getSimilarity();
+        return 0;
+    }
+    
+    public boolean contains(Song song) {
+        for (Similarity sim : neighbors)
+            if (song.getID() == sim.getNeighborSong().getID())
+                return true;
+        return false;
     }
 }

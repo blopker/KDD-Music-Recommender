@@ -23,7 +23,7 @@ public class Similarity implements Comparable<Similarity> {
         return similarity;
     }
 
-    public Song getNeighborItem() {
+    public Song getNeighborSong() {
         return neighbor;
     }
 

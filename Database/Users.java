@@ -22,7 +22,7 @@ public class Users implements Iterable<User> {
             users.put(user.getID(), user);
     }
 
-    protected User getUser(int id) {
+    public User getUser(int id) {
         return users.get(id);
     }
     
