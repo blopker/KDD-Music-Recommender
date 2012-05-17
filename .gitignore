@@ -2,3 +2,5 @@ build.xml
 manifest.mf
 nbproject/
 lib/
+build/
+dist/

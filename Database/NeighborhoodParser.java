@@ -16,17 +16,22 @@ public class NeighborhoodParser extends Parser {
     @Override
         protected void format(String dataLine) {
             if(dataLine.contains("-")){
-                    formatSong(dataLine);
-            } else {
                     formatSimilarity(dataLine);
+            } else {
+                    formatSong(dataLine);
             }
         }
 
         private void formatSong(String dataLine) {
             if (dataLine != null) {
-                Song newSong = new Song(Integer.getInteger(dataLine));
+                try {
+                Song newSong = new Song(Integer.parseInt(dataLine));
                 currentSong = newSong;
-                songs.addSong(newSong);                
+                songs.addSong(newSong);
+                } catch (Exception e) {
+                    System.out.println(dataLine);
+                    System.exit(1);
+                }
             }
             else {
                 System.err.println("Unexpected format for song line: " + dataLine);
@@ -36,7 +41,7 @@ public class NeighborhoodParser extends Parser {
         private void formatSimilarity(String dataLine) {
             String[] splitData = dataLine.split("\t");
             if ((splitData != null) && (splitData.length == 3) ) {
-                int neighborID = Integer.getInteger(splitData[1]);
+                int neighborID = Integer.parseInt(splitData[1]);
                 Song neighbor = songs.containsSong(neighborID) ? songs.getSong(neighborID) : new Song(neighborID);
                 double neighborSim = Double.parseDouble(splitData[2]);
                 Similarity sim = new Similarity(neighbor, neighborSim);

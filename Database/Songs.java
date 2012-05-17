@@ -40,9 +40,6 @@ public class Songs implements Iterable<Song> {
         return songs.containsKey(id);
     }
     
-    public ArrayList<Song> getSongList() {
-        return (ArrayList) songs.values();
-    }
 
     @Override
     public Iterator<Song> iterator() {

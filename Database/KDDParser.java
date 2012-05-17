@@ -2,6 +2,7 @@ package Database;
 
 import Database.Primitives.Song;
 import Database.Primitives.User;
+import java.util.regex.Pattern;
 
 public class KDDParser extends Parser{
 
@@ -39,7 +40,7 @@ public class KDDParser extends Parser{
         }
 
         private void formatUser(String dataLine) {
-            String[] splitData = dataLine.split("|");
+            String[] splitData = dataLine.split("\\|");
             if (splitData != null) {
                 currentUser = new User(strArrayToIntArray(splitData)[0]);
                 users.addUser(currentUser);
@@ -51,6 +52,7 @@ public class KDDParser extends Parser{
         private int[] strArrayToIntArray(String[] line) {
             int[] infoLine = new int[line.length];
             for (int i = 0; i < line.length; i++) {
+                    //none is a keyword in the KDD database
                     int info = (line[i].toLowerCase() == "none")?-1:Integer.                                                                                                                                                             valueOf(line[i]).intValue();
                     infoLine[i] = info;
             }

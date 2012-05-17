@@ -38,7 +38,7 @@ public class User {
         sumRatings += song.getRating();
     }
     
-    public int getAvgRating(){
+    public double getAvgRating(){
         return sumRatings/ratings.getCount();
     }
     
