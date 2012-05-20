@@ -15,7 +15,7 @@ import Database.Users;
  * @author sarahejones, sns
  */
 public class SequentialKNN implements Recommender{
-    private final int RATING_COUNT_THRESHOLD = 3;
+    private final int RATING_COUNT_THRESHOLD = 1;
      /* could precompute  this w/ map reduce: finding k nearest neighbors */
     @Override
     public void createNeighborhoods(Songs items, Users users, int k) {
@@ -71,8 +71,9 @@ public class SequentialKNN implements Recommender{
 //        forall neighborhood_i Union items_rated_by_user(active) item
             double numerator = 0, denominator = 0, predictedRating;
             for (Song ratedByActive : active.getRatings()) {
-                if (!active.rated(s) && s.getNeighborhood().contains(ratedByActive)) {
+                if (s.getNeighborhood().contains(ratedByActive) && !active.rated(s)) {
                     double similarity = songs.getSong(ratedByActive.getID()).getSimilarity(s);
+                    System.out.println("Sim" + similarity);
 //                numerator += math ... similarity(i, item) * active.rating(item) …
                     numerator += similarity * active.getRating(ratedByActive);
 //                denominator += |similarity(i, item)|                    
@@ -81,8 +82,9 @@ public class SequentialKNN implements Recommender{
             }
             predictedRating = numerator / denominator;
             //add item to set of recommended items if preQdicted_rating is “good enough”\
-            if (predictedRating >= threshold)
-                System.out.println(s + "\t" + predictedRating);
+            if (!Double.isNaN(predictedRating))
+            //if (predictedRating >= threshold)  (Not doing threshold for this part)
+                System.out.println(s.getID() + "\t" + predictedRating);
            
         }
     }

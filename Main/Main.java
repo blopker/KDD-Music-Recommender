@@ -92,20 +92,20 @@ public class Main {
     }
 
     private static void query(Recommender recommender) {
-        Parser kddParser = new KDDParser(options.getDatabasePath());
-
         Songs songs = new Songs();
         Users users = new Users();
+
+        Parser kddParser = new KDDParser(options.getDatabasePath());
         kddParser.parse(songs, users);
 
-        Parser nbrParser = new NeighborhoodParser(options.getDatabasePath());  //alternatively print out users that rated that item
-        
+        Parser nbrParser = new NeighborhoodParser(options.getNeighborhoodFilePath());  //alternatively print out users that rated that item
         nbrParser.parse(songs, users);
 
         Scanner in = new Scanner(System.in);
         int line;
-        do {
-            System.out.println("Enter user id");
+        System.out.println("Enter user id");
+
+        while (in.hasNext()) {
             line = Integer.parseInt(in.nextLine());
             User u = users.getUser(line);
             if (u == null) {
@@ -113,7 +113,8 @@ public class Main {
                 continue;
             }
             recommender.recommendSong(u, songs,options.getThreshold());
-        } while (in.hasNext());
+            System.out.println("Enter user id");
+        }
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

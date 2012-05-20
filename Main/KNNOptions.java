@@ -19,7 +19,7 @@ public class KNNOptions {
     }
     
     @Option(name="-k",usage="How many nearest neighbors to calculate.")
-    private int k;
+    private int k = 10;
 
     @Option(name="-q",usage="Activate query mode!!!")
     private boolean query = false;

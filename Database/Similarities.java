@@ -45,7 +45,7 @@ public class Similarities {
     public double getSimilarity(Song song) {
         for (Similarity sim : neighbors)
             if (song.getID() == sim.getNeighborSong().getID())
-                sim.getSimilarity();
+                return sim.getSimilarity();
         return 0;
     }
     

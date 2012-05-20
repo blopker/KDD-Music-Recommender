@@ -37,7 +37,7 @@ public class KDDParser extends Parser {
             currentUser.addRating(new Song(splitData[0], splitData[1]));
 
         } else {
-            System.err.println("Unexpected format for song line: " + dataLine);
+            //System.err.println("Unexpected format for song line: " + dataLine);
         }
     }
 
@@ -52,11 +52,13 @@ public class KDDParser extends Parser {
     }
 
     private int[] strArrayToIntArray(String[] line) {
-        int[] infoLine = new int[line.length];
-        for (int i = 0; i < line.length; i++) {
+        int[] infoLine = new int[2];
+        for (int i = 0; i < 2; i++) {
             //none is a keyword in the KDD database
-            int info = (line[i].toLowerCase() == "none") ? -1 : Integer.valueOf(line[i]).intValue();
-            infoLine[i] = info;
+            
+                int info = (line[i].toLowerCase() == "none") ? -1 : Integer.valueOf(line[i]).intValue();
+                infoLine[i] = info;
+
         }
         return infoLine;
     }
