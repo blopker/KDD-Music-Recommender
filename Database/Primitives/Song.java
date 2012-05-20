@@ -12,7 +12,7 @@ public class Song {
     private int id;
     private int totalRating;
     private int ratingCount;
-    private Similarities similarities;
+    private Similarities similarities = new Similarities();
 
     public Song(int id, int rating) {
         this.id = id;

@@ -7,7 +7,7 @@ package Database;
 
 import Database.Primitives.Similarity;
 import Database.Primitives.Song;
-import SequentialRecommender.SequentialKNN;
+import Main.Main;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -16,10 +16,11 @@ import java.util.Collections;
  * @author sarahejones, sns
  */
 public class Similarities {
-    private static int k = SequentialKNN.getK();
+    private int k;
     private ArrayList<Similarity> neighbors;
 
     public Similarities() {
+        k = Main.getOptions().getK();
         neighbors = new ArrayList<Similarity>();
     }
 
