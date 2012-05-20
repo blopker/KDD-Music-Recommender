@@ -22,14 +22,12 @@ public class NeighborhoodParser extends Parser {
 
     private void formatSong(String dataLine) {
         if (dataLine != null) {
-            try {
-                Song newSong = new Song(Integer.parseInt(dataLine));
-                currentSong = newSong;
-                songs.addSong(newSong);
-            } catch (Exception e) {
-                System.out.println(dataLine);
+            currentSong = songs.getSong(Integer.parseInt(dataLine));
+            if (currentSong == null) {
+                System.err.println("Reading Neighborhood database found Song that wasn't already constructed.  Exiting.");
                 System.exit(1);
             }
+
         } else {
             System.err.println("Unexpected format for song line: " + dataLine);
         }
@@ -39,7 +37,11 @@ public class NeighborhoodParser extends Parser {
         String[] splitData = dataLine.split("\t");
         if ((splitData != null) && (splitData.length == 3)) {
             int neighborID = Integer.parseInt(splitData[1]);
-            Song neighbor = songs.containsSong(neighborID) ? songs.getSong(neighborID) : new Song(neighborID);
+            Song neighbor = songs.getSong(neighborID);
+            if (neighbor == null) {
+                System.err.println("Reading Neighborhood database found Song that wasn't already constructed.  Exiting.");
+                System.exit(1);
+            }
             double neighborSim = Double.parseDouble(splitData[2]);
             Similarity sim = new Similarity(neighbor, neighborSim);
             currentSong.addToNeighborhood(sim);

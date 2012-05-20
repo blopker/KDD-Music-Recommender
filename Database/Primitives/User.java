@@ -39,7 +39,7 @@ public class User {
     }
     
     public double getAvgRating(){
-        return sumRatings/ratings.getCount();
+        return ((double)sumRatings)/ratings.getCount();
     }
     
     public boolean rated(Song song){

@@ -22,7 +22,7 @@ public abstract class Parser {
     public void parse(Songs s, Users u) {
         songs = s;
         users = u;
-        System.out.println("Reading database...");
+        System.err.println("Reading database...");
         StringBuilder text = new StringBuilder();
         String NL = System.getProperty("line.separator");
         Scanner scanner = new Scanner(file);
@@ -30,7 +30,7 @@ public abstract class Parser {
             format(scanner.nextLine());
         }
         scanner.close();
-        System.out.println("Database loaded.");
+        System.err.println("Database loaded.");
     }
 
     protected abstract void format(String dataLine);

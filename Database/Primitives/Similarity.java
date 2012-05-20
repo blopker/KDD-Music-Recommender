@@ -29,9 +29,7 @@ public class Similarity implements Comparable<Similarity> {
 
     public int compareTo(Similarity s) {
         double sim_other = s.getSimilarity();
-        if (similarity == sim_other)
-            return 0;
-        else if (similarity > sim_other)
+       if (similarity > sim_other)
             return 1;
         else
             return -1;

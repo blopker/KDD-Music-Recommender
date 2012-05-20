@@ -2,7 +2,7 @@ package Database;
 
 import Database.Primitives.Song;
 import Database.Primitives.User;
-import java.util.regex.Pattern;
+
 
 public class KDDParser extends Parser {
 
@@ -22,16 +22,19 @@ public class KDDParser extends Parser {
     }
 
     private void formatSong(String dataLine) {
+        //song\trating
         int[] splitData = strArrayToIntArray(dataLine.split("\t"));
         if (splitData.length == 2) {
             Song newSong;
             if (songs.containsSong(splitData[0])) {
                 newSong = songs.getSong(splitData[0]);
+                newSong.addRating(splitData[1]);
             } else {
                 newSong = new Song(splitData[0], splitData[1]);
             }
             songs.addSong(newSong);
-            currentUser.addRating(newSong);
+
+            currentUser.addRating(new Song(splitData[0], splitData[1]));
 
         } else {
             System.err.println("Unexpected format for song line: " + dataLine);

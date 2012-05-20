@@ -21,8 +21,8 @@ public class KNNOptions {
     @Option(name="-k",usage="How many nearest neighbors to calculate.")
     private int k;
 
-    @Option(name="-q",usage="Query user ID")
-    private int query = -1;
+    @Option(name="-q",usage="Activate query mode!!!")
+    private boolean query = false;
 
     @Option(name="-n", usage="Neighborhood file, used for query only")
     private String  neighborhood_file;
@@ -35,7 +35,7 @@ public class KNNOptions {
     private List<String> arguments = new ArrayList<String>();
 
     public Mode getMode(){
-        return (query == -1)?Mode.CALC:Mode.QUERY;
+        return (query)?Mode.QUERY:Mode.CALC;
     }
     
     public String getDatabasePath() {
@@ -48,10 +48,6 @@ public class KNNOptions {
 
     public String getNeighborhoodFilePath() {
         return neighborhood_file;
-    }
-
-    public int getQuery() {
-        return query;
     }
 
     public double getThreshold() {

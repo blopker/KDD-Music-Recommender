@@ -1,11 +1,14 @@
 package Main;
 
 import Database.KDDParser;
+import Database.NeighborhoodParser;
 import Database.Parser;
+import Database.Primitives.User;
 import Database.Songs;
 import Database.Users;
 import Recommender.Recommender;
 import Recommender.SequentialKNN;
+import java.util.Scanner;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
 
@@ -29,71 +32,21 @@ public class Main {
 
         // Parse the command line options
         CmdLineParser parser = new CmdLineParser(options);
-        usage(parser);
         try {
             parser.parseArgument(args);
+
         } catch (CmdLineException ex) {
+            usage(parser);
             commandLineError(ex);
+        } 
+        try {
+            run();
+        } catch (IndexOutOfBoundsException ex) {
+            System.err.println("Array Index error");
+            usage(parser);
         }
+        
 
-        run();
-
-////        parse file
-//        Songs songs = new Songs();
-//        Users users = new Users();
-//        for (String a : args) {
-//            System.out.println(a);
-//        }
-//        if (args.length > 2) {
-//            if (args[0].charAt(0) == '-') {
-//
-//                switch (args[0].charAt(1)) {
-//
-//                    case 'c':
-//                        if (args.length == 3) {
-//                            k = Integer.parseInt(args[2]);
-//                            KDDParser parser = new KDDParser(songs, users, args[1]);
-//                            parser.read();
-//                            createNeighborhoods(songs, users);
-//
-//                        } else {
-//                            commandLineError();
-//                        }
-//                        break;
-//                    case 'q':
-//                        if (args.length == 4) {
-//                            threshold = Double.parseDouble(args[3]);
-//                            NeighborhoodParser parser = new NeighborhoodParser(songs, users, args[1]);  //alternatively print out users that rated that item
-//                            parser.read();
-//                            KDDParser userParser = new KDDParser(songs, users, args[2]);
-//                            userParser.read();
-//                            Scanner in = new Scanner(System.in);
-//                            int line;
-//                            do {
-//                                System.out.println("Enter user id");
-//                                line = Integer.parseInt(in.nextLine());
-//                                User u = users.getUser(line);
-//                                if (u == null) {
-//                                    System.out.println("Invalid user id");
-//                                    continue;
-//                                }
-//                                recommendSong(u, songs);
-//                            } while (in.hasNext());
-//
-//                        } else {
-//                            commandLineError();
-//                        }
-//                        break;
-//                    default:
-//                        commandLineError();
-//                }
-//            } else {
-//                commandLineError();
-//            }
-//
-//        } else {
-//            commandLineError();
-//        }
     }
 
     private static void commandLineError(CmdLineException ex) {
@@ -103,7 +56,7 @@ public class Main {
     }
 
     private static void usage(CmdLineParser parser) {
-        System.out.println("Usage:\njava -jar KDD-Music-Recommender.jar -k N DATABASE\njava -jar KDD-Music-Recommender.jar -q N -t D -n NEIGHBOR_FILE DATABASE");
+        System.out.println("Usage:\njava -jar KDD-Music-Recommender.jar -k N DATABASE\njava -jar KDD-Music-Recommender.jar -q -t D -n NEIGHBOR_FILE DATABASE");
         parser.printUsage(System.out);
         System.exit(1);
     }
@@ -139,6 +92,28 @@ public class Main {
     }
 
     private static void query(Recommender recommender) {
+        Parser kddParser = new KDDParser(options.getDatabasePath());
+
+        Songs songs = new Songs();
+        Users users = new Users();
+        kddParser.parse(songs, users);
+
+        Parser nbrParser = new NeighborhoodParser(options.getDatabasePath());  //alternatively print out users that rated that item
+        
+        nbrParser.parse(songs, users);
+
+        Scanner in = new Scanner(System.in);
+        int line;
+        do {
+            System.out.println("Enter user id");
+            line = Integer.parseInt(in.nextLine());
+            User u = users.getUser(line);
+            if (u == null) {
+                System.out.println("Invalid user id");
+                continue;
+            }
+            recommender.recommendSong(u, songs,options.getThreshold());
+        } while (in.hasNext());
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

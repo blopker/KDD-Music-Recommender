@@ -33,7 +33,7 @@ public class Similarities {
        if (index < 0)
            neighbors.add(-index -1, is);
        while (neighbors.size() > k)
-           neighbors.remove(k);
+           neighbors.remove(0);
     }
 
     public void print() {
